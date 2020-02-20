@@ -5,23 +5,36 @@ import math
 def recipe_batches(recipe, ingredients):
 
 # create arr for recipe and arr for ingredients
-  recipe_keys = recipe.keys()
-  ingredients_keys = ingredients.keys()
-  print(recipe_keys)
-  print(ingredients_keys)
+
+  recipe_keys = [*recipe]
+  ingredients_keys = [*ingredients]
+
+# create var to skip for loop if we don't have all the ingredients
+
+  skip = False
 
 # need to make sure ingredients contains all keys from recipe, else return 0
 
   if len(ingredients_keys) < len(recipe_keys):
-    batches = 0
-  
-# loop over ingredients using if <ingredient from recipe> in ingredients: continue, else: return 0
-# will need a batch variable
-  batches = 0
-# divide each key in ingredients by its relative in recipe
-# if any result == 0, return 0
-# lowest remainder from the group is the # of batches
+    skip = True
 
+# will need a batches variable
+
+  batches = 100000 # set to infinity so that first remainder will always be less
+  
+# loop over ingredients and divide (//) each value in ingredients by its relative in recipe
+
+  for i in range(0, len(recipe)):
+
+    # check skip var
+    if skip == True:
+      batches = 0
+    # if any result == 0, return 0
+    elif ingredients[ingredients_keys[i]] // recipe[recipe_keys[i]] < batches:
+      batches = ingredients[ingredients_keys[i]] // recipe[recipe_keys[i]]
+
+
+# lowest remainder from the group is the # of batches
   return batches
 
 if __name__ == '__main__':
