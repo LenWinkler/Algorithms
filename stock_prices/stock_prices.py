@@ -3,31 +3,27 @@
 import argparse
 
 def find_max_profit(prices):
+
+  # loop through prices and find cheapest price that has items to the right of it
+  # set lowest price to variable
+  current_min_price_so_far = None
+  max_profit_so_far = -2000000000
+  for i in range(0, len(prices) - 1):
+    if current_min_price_so_far == None:
+      current_min_price_so_far = prices[i]
+    elif prices[i + 1] and prices[i] < current_min_price_so_far:
+      current_min_price_so_far = prices[i]
   
-  current_i = 0
-  proceed = True
+  my_prices = prices[prices.index(current_min_price_so_far) + 1 : ]
 
-  # using for loop, and starting i at prices[0], subtract price from each subsequent item in the list
-  while proceed:
-    # keep track of current_min_price_so_far, max_profit_so_far, and current index
-    current_min_price_so_far = prices[0]
-    max_profit_so_far = prices[1] - prices[0]
+  # subtract cheapest price from all prices to the right of it
+  for price in my_prices:
+    if price - current_min_price_so_far > max_profit_so_far:
+      max_profit_so_far = price - current_min_price_so_far
 
-    if current_i == len(prices) - 1 and prices[current_i] - current_min_price_so_far > max_profit_so_far:
-      max_profit_so_far = prices[current_i] - current_min_price_so_far
-    for price in prices:
-      j = current_i + 1
-      diff = prices[j] - prices[current_i]
-
-  # each time, the current result is compared to max_profit_so_far. if result > max, set max to result
-      if diff > max_profit_so_far:
-        max_profit_so_far = diff
-
-  # move j to the right
-      j += 1
-
-  # when j reaches end of list, move current_i to the right
-
+  # set largest difference to variable
+  # return largest difference
+  return max_profit_so_far
 
 
 if __name__ == '__main__':
