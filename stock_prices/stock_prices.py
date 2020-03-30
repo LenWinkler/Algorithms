@@ -3,7 +3,27 @@
 import argparse
 
 def find_max_profit(prices):
-  pass
+
+  # loop through prices and find cheapest price that has items to the right of it
+  # set lowest price to variable
+  current_min_price_so_far = None
+  max_profit_so_far = -2000000000
+  for i in range(0, len(prices) - 1):
+    if current_min_price_so_far == None:
+      current_min_price_so_far = prices[i]
+    elif prices[i + 1] and prices[i] < current_min_price_so_far:
+      current_min_price_so_far = prices[i]
+  
+  my_prices = prices[prices.index(current_min_price_so_far) + 1 : ]
+
+  # subtract cheapest price from all prices to the right of it
+  for price in my_prices:
+    if price - current_min_price_so_far > max_profit_so_far:
+      max_profit_so_far = price - current_min_price_so_far
+
+  # set largest difference to variable
+  # return largest difference
+  return max_profit_so_far
 
 
 if __name__ == '__main__':
